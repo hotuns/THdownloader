@@ -72,3 +72,102 @@ class database_resource:
         self.conn.commit()
         self.cursor.close()
         self.conn.close()
+
+# ============================
+# 设备查询：给 GUI 名称搜索用
+# v2.0 刘坦然 26/01/08
+# ============================
+from typing import List, Tuple
+
+def search_devices_by_name(keyword: str, limit: int = 30) -> List[Tuple[int, str]]:
+    """
+    模糊搜索设备名（用于下拉建议）
+    返回 [(id, name), ...]
+    """
+    kw = (keyword or "").strip()
+    if not kw:
+        return []
+
+    sql = (
+        "SELECT `id`, `name` "
+        "FROM `devices` "
+        "WHERE `deleted_at` IS NULL AND `name` LIKE %s "
+        "ORDER BY `name` "
+        "LIMIT %s"
+    )
+    like_kw = f"%{kw}%"
+    try:
+        with database_resource() as cursor:
+            cursor.execute(sql, (like_kw, int(limit)))
+            rows = cursor.fetchall() or []
+            return [(int(r[0]), str(r[1])) for r in rows]
+    except Exception:
+        return []
+
+def get_device_by_exact_name(name: str, limit: int = 20) -> List[Tuple[int, str]]:
+    """
+    精确匹配设备名（用户输入完整名字时用）
+    返回 [(id, name), ...]
+    """
+    n = (name or "").strip()
+    if not n:
+        return []
+
+    sql = (
+        "SELECT `id`, `name` "
+        "FROM `devices` "
+        "WHERE `deleted_at` IS NULL AND `name` = %s "
+        "LIMIT %s"
+    )
+    try:
+        with database_resource() as cursor:
+            cursor.execute(sql, (n, int(limit)))
+            rows = cursor.fetchall() or []
+            return [(int(r[0]), str(r[1])) for r in rows]
+    except Exception:
+        return []
+
+# ============================
+# 设备查询：给 GUI id搜索用
+# v2.1 刘坦然 26/01/08
+# ============================
+
+from typing import List, Tuple
+
+def search_devices_by_id(keyword: str, limit: int = 30) -> List[Tuple[int, str]]:
+    """
+    按设备ID检索（支持输入部分ID，例如输入 25 能匹配 2594）
+    返回: [(id, name), ...]
+    """
+    kw = (keyword or "").strip()
+    if not kw:
+        return []
+
+    sql = (
+        "SELECT id, name FROM devices "
+        "WHERE deleted_at IS NULL AND CAST(id AS CHAR) LIKE %s "
+        "ORDER BY id ASC LIMIT %s"
+    )
+
+    like_kw = f"%{kw}%"
+    with database_resource() as cursor:
+        cursor.execute(sql, (like_kw, limit))
+        rows = cursor.fetchall() or []
+    return [(int(r[0]), str(r[1])) for r in rows]
+
+
+def get_device_by_id(device_id: int) -> List[Tuple[int, str]]:
+    """
+    按设备ID精确获取（用于“添加”时用户直接输入ID）
+    返回: [(id, name)] 或 []
+    """
+    sql = (
+        "SELECT id, name FROM devices "
+        "WHERE deleted_at IS NULL AND id = %s "
+        "LIMIT 1"
+    )
+    with database_resource() as cursor:
+        cursor.execute(sql, (device_id,))
+        rows = cursor.fetchall() or []
+    return [(int(r[0]), str(r[1])) for r in rows]
+

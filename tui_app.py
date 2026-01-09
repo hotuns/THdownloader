@@ -8,15 +8,17 @@ import asyncio
 import logging
 import threading
 import tkinter as tk
+import tkinter.font as tkfont # v2.0
 from datetime import datetime, timedelta
 from pathlib import Path
 from tkinter import ttk, messagebox, filedialog, scrolledtext
-from typing import List, Optional
+from typing import List, Optional, Tuple, Dict
 import sys
 import os
 
 from download.async_downloader import AsyncDeviceDataDownloader, DownloadError
-
+from download.db import search_devices_by_name, get_device_by_exact_name # v2.0
+from download.db import search_devices_by_id, get_device_by_id  # v2.1
 
 class DownloadProgressWidget:
     """下载进度显示组件"""
@@ -123,7 +125,325 @@ class DeviceSelectionWidget:
         self.status_var.set(f"已选择 {len(devices)} 个设备")
         self.status_label.config(foreground="green")
         return True
+# v2.0
+class DeviceNameSelectionWidget:
+    """
+    设备选择（按名称搜索，多选）
+    - 输入时自动下拉（防抖 + 后台线程查库）
+    - 下拉用 Text 做局部标红
+    - 下拉高度随匹配数变化（最多 MAX_VISIBLE）
+    - 切到别的程序/最小化时下拉自动隐藏（解决图层悬浮问题）
+    - “添加”后清空输入框；“清空已选”一键清除
+    - 对外接口保持：get_devices() -> List[int], validate_devices() -> bool
+    """
 
+    MAX_VISIBLE = 10
+    MIN_WIDTH = 500
+
+    def __init__(self, parent):
+        self.parent = parent
+        self._debounce_after_id = None
+
+        self._popup: Optional[tk.Toplevel] = None
+        self._text: Optional[tk.Text] = None
+        self._suggestions: List[Tuple[int, str]] = []  # (id, name)
+        self._selected: Dict[int, str] = {}            # {id: name}
+
+        self.frame = ttk.LabelFrame(parent, text="设备选择（按名称搜索）", padding="10")
+
+        ttk.Label(
+            self.frame,
+            text="输入设备名称关键字，自动下拉匹配；选择或输入完整名称后点击“添加”。"
+        ).pack(anchor=tk.W, pady=(0, 6))
+
+        row = ttk.Frame(self.frame)
+        row.pack(fill=tk.X, pady=(0, 6))
+
+        self.keyword_var = tk.StringVar()
+        self.entry = ttk.Entry(row, textvariable=self.keyword_var, width=40)
+        self.entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+        self.btn_add = ttk.Button(row, text="添加", command=self.add_current)
+        self.btn_add.pack(side=tk.LEFT, padx=(8, 0))
+
+        self.btn_clear = ttk.Button(row, text="清空已选", command=self.clear_selected)
+        self.btn_clear.pack(side=tk.LEFT, padx=(8, 0))
+
+        self.status_var = tk.StringVar(value="尚未选择设备")
+        self.status_label = ttk.Label(self.frame, textvariable=self.status_var)
+        self.status_label.pack(anchor=tk.W, pady=(0, 6))
+
+        box = ttk.LabelFrame(self.frame, text="已选择设备")
+        box.pack(fill=tk.BOTH, expand=True)
+        self.listbox = tk.Listbox(box, height=6)
+        self.listbox.pack(fill=tk.BOTH, expand=True, padx=6, pady=6)
+
+        # --- 字体/行高：用于计算下拉高度 ---
+        self._font = tkfont.Font(font=self.entry.cget("font"))
+        self._row_height = max(18, self._font.metrics("linespace") + 6)
+
+        # --- bindings ---
+        self.keyword_var.trace_add("write", lambda *_: self.on_typing())
+        self.entry.bind("<Down>", lambda e: self.focus_popup())
+        self.entry.bind("<Return>", lambda e: self.add_current())
+        self.entry.bind("<Escape>", lambda e: self.hide_popup())
+
+        root = self.frame.winfo_toplevel()
+        root.bind("<Button-1>", self._global_click_close, add=True)
+        root.bind("<FocusOut>", self._on_root_focus_out, add=True)
+        root.bind("<Unmap>", lambda e: self.hide_popup(), add=True)
+        root.bind("<Configure>", lambda e: self._reposition_popup(), add=True)
+
+    def get_devices(self) -> List[int]:
+        return list(self._selected.keys())
+
+    def validate_devices(self) -> bool:
+        if not self._selected:
+            self.status_var.set("请至少添加一个设备")
+            self.status_label.config(foreground="red")
+            return False
+        self.status_var.set(f"已选择 {len(self._selected)} 个设备")
+        self.status_label.config(foreground="green")
+        return True
+
+    def on_typing(self):
+        if self._debounce_after_id:
+            self.frame.after_cancel(self._debounce_after_id)
+        self._debounce_after_id = self.frame.after(250, self._trigger_search_background)
+
+    def _trigger_search_background(self):
+        kw = self.keyword_var.get().strip()
+        if not kw:
+            self.hide_popup()
+            return
+
+        def worker():
+            rows = search_devices_by_name(kw, limit=30)
+
+            # v2.1: 如果用户输入的是纯数字，同步按ID检索并合并
+            if kw.isdigit():
+                try:
+                    rows_by_id = search_devices_by_id(kw, limit=30)
+                except Exception:
+                    rows_by_id = []
+
+                if rows_by_id:
+                    seen = set()
+                    merged = []
+                    for did, name in (rows_by_id + rows):
+                        if did not in seen:
+                            merged.append((did, name))
+                            seen.add(did)
+                    rows = merged
+
+            self.frame.after(0, lambda: self._render_suggestions(kw, rows))
+            # try:
+            #     rows = search_devices_by_name(kw, limit=30)
+            # except Exception:
+            #     rows = []
+            # self.frame.after(0, lambda: self._render_suggestions(kw, rows))
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _render_suggestions(self, kw: str, rows: List[Tuple[int, str]]):
+        self._suggestions = rows
+        if not rows:
+            self.hide_popup()
+            return
+
+        self._ensure_popup()
+        assert self._popup is not None and self._text is not None
+
+        visible = min(len(rows), self.MAX_VISIBLE)
+        self._text.config(height=visible)
+
+        # 写入内容 + 标红
+        self._text.config(state="normal")
+        self._text.delete("1.0", "end")
+        self._text.tag_delete("match")
+
+        low_kw = kw.lower()
+        for idx, (_, name) in enumerate(rows):
+            self._text.insert("end", name + "\n")
+            low_name = name.lower()
+            start = 0
+            while True:
+                pos = low_name.find(low_kw, start)
+                if pos == -1:
+                    break
+                self._text.tag_add("match", f"{idx + 1}.{pos}", f"{idx + 1}.{pos + len(kw)}")
+                start = pos + len(kw)
+
+        self._text.tag_config("match", foreground="red")
+        self._text.config(state="disabled")
+
+        # 显示（如果当前是隐藏状态）
+        if not self._popup.winfo_viewable():
+            self._popup.deiconify()
+            self._popup.lift(self.frame.winfo_toplevel())
+
+        # 定位（放在 deiconify 之后）
+        self._reposition_popup(visible_rows=visible)
+
+    def _ensure_popup(self):
+        if self._popup and self._popup.winfo_exists():
+            return
+
+        self._popup = tk.Toplevel(self.frame)
+        self._popup.withdraw()
+        self._popup.overrideredirect(True)
+        # 注意：不设置 topmost，避免切到别的程序时仍悬浮在最上层
+        self._popup.transient(self.frame.winfo_toplevel())
+
+        self._text = tk.Text(
+            self._popup,
+            height=5,
+            width=60,
+            wrap="none",
+            cursor="hand2",
+            font=self.entry.cget("font")
+        )
+        self._text.pack(fill="both", expand=True)
+        self._text.bind("<Button-1>", self._on_popup_click)
+        self._text.bind("<Escape>", lambda e: self.hide_popup())
+
+    def _reposition_popup(self, visible_rows: Optional[int] = None):
+        if not (self._popup and self._popup.winfo_exists()):
+            return
+
+        self.frame.update_idletasks()
+        # entry 还没布局好（宽度=1时很常见），延迟再定位，避免跑到 0,0
+        if self.entry.winfo_width() <= 1:
+            self.frame.after(10, lambda: self._reposition_popup(visible_rows=visible_rows))
+            return
+        x = self.entry.winfo_rootx()
+        y = self.entry.winfo_rooty() + self.entry.winfo_height()
+        w = max(self.entry.winfo_width(), self.MIN_WIDTH)
+
+        if visible_rows is None and self._text:
+            visible_rows = int(self._text.cget("height"))
+        visible_rows = max(1, int(visible_rows or 1))
+
+        h = visible_rows * self._row_height + 8
+        self._popup.geometry(f"{w}x{h}+{x}+{y}")
+
+    def _reposition_popup_dynamic(self, visible_rows: int):
+        """
+        - 确保 popup 已创建
+        - 高度按匹配数动态调整
+        - 重新定位到 entry 下方
+        """
+        self._ensure_popup()
+        if self._text:
+            try:
+                self._text.config(height=max(1, int(visible_rows)))
+            except Exception:
+                pass
+        self._reposition_popup(visible_rows=visible_rows)
+
+    def hide_popup(self):
+        #  不 destroy，改为 withdraw，避免触发一连串焦点/闪烁问题
+        if self._popup and self._popup.winfo_exists():
+            self._popup.withdraw()
+        self._suggestions = []
+
+
+    def focus_popup(self):
+        if self._popup and self._popup.winfo_exists():
+            self._popup.focus_force()
+
+    def _on_popup_click(self, event):
+        if not self._text:
+            return
+        index = self._text.index(f"@{event.x},{event.y}")
+        line = int(index.split(".")[0])
+        i = line - 1
+        if 0 <= i < len(self._suggestions):
+            _, name = self._suggestions[i]
+            self.keyword_var.set(name)
+            self.entry.icursor("end")
+            self.hide_popup()
+
+    def _global_click_close(self, event):
+        if self._popup and self._popup.winfo_exists():
+            widget = event.widget
+            if widget is self._popup or (hasattr(widget, "winfo_toplevel") and widget.winfo_toplevel() is self._popup):
+                return
+            if widget is self.entry:
+                return
+            self.hide_popup()
+
+    def _on_root_focus_out(self, event):
+        self.frame.after(80, self._check_focus_then_maybe_hide)
+
+    def _check_focus_then_maybe_hide(self):
+        if not (self._popup and self._popup.winfo_exists()):
+            return
+        root = self.frame.winfo_toplevel()
+        focused = root.focus_get()
+        if focused is None:
+            self.hide_popup()
+            return
+        top = focused.winfo_toplevel()
+        if top is not root and top is not self._popup:
+            self.hide_popup()
+
+    def add_current(self):
+        name = self.keyword_var.get().strip()
+        if not name:
+            return
+
+        # v2.1: 允许用户直接输入设备ID并添加
+        if name.isdigit():
+            try:
+                matches = get_device_by_id(int(name))
+            except Exception:
+                matches = []
+            if len(matches) == 1:
+                did, n = matches[0]
+                self._selected[did] = n
+                self._refresh_selected_list()
+                self.keyword_var.set("")
+                self.hide_popup()
+                return
+
+        for did, n in self._suggestions:
+            if n == name:
+                self._selected[did] = n
+                self._refresh_selected_list()
+                self.keyword_var.set("")
+                self.hide_popup()
+                return
+
+        matches = get_device_by_exact_name(name)
+        if len(matches) == 1:
+            did, n = matches[0]
+            self._selected[did] = n
+            self._refresh_selected_list()
+            self.keyword_var.set("")
+            self.hide_popup()
+            return
+
+        self.hide_popup()
+        self.status_var.set("未找到唯一匹配，请从下拉选择或输入更精确的名称")
+        self.status_label.config(foreground="red")
+
+    def clear_selected(self):
+        self._selected.clear()
+        self._refresh_selected_list()
+        self.status_var.set("已清空已选设备")
+        self.status_label.config(foreground="green")
+
+    def _refresh_selected_list(self):
+        self.listbox.delete(0, "end")
+        for did, name in sorted(self._selected.items(), key=lambda x: x[1].lower()):
+            self.listbox.insert("end", f"{name}  (ID={did})")
+        if self._selected:
+            self.status_var.set(f"已选择 {len(self._selected)} 个设备")
+            self.status_label.config(foreground="green")
+        else:
+            self.status_var.set("尚未选择设备")
+            self.status_label.config(foreground="black")
 
 class DateRangeWidget:
     """日期范围选择组件"""
@@ -475,7 +795,8 @@ class DownloadManagerApp:
         self.dir_widget = DownloadDirWidget(top_left)
         self.dir_widget.frame.pack(fill=tk.X, pady=(0, 10))
 
-        self.device_widget = DeviceSelectionWidget(top_left)
+        #self.device_widget = DeviceSelectionWidget(top_left)
+        self.device_widget = DeviceNameSelectionWidget(top_left) # v2.0
         self.device_widget.frame.pack(fill=tk.X)
 
         self.date_widget = DateRangeWidget(top_right)

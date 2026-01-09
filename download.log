@@ -40,3 +40,177 @@
 2026-01-04 15:28:53,034 - download.async_downloader - INFO - 数据表时间范围: 2022-06-01 00:00:00 到 2024-12-31 23:59:59
 2026-01-04 15:28:53,041 - download.async_downloader - INFO - [10.0%] downloading: 103 (1/1)
 2026-01-04 15:29:05,162 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-07 14:42:29,889 - download.async_downloader - INFO - OSS连接成功
+2026-01-07 14:43:19,969 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-07 14:43:19,969 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-07 14:43:19,974 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-07 16:41:45,563 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 08:31:28,136 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:00:27,200 - root - ERROR - 应用启动失败: 'DownloadManagerApp' object has no attribute 'content_widget'
+2026-01-08 09:03:43,492 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:03:46,882 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 09:03:46,882 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 09:03:46,888 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 09:14:39,833 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:14:46,037 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 09:14:46,037 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 09:14:46,038 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 09:23:02,693 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:23:05,993 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 09:23:05,994 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 09:23:06,000 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 09:32:09,657 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:32:12,142 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 09:32:12,143 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 09:32:12,144 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 09:33:04,268 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:33:04,290 - download.async_downloader - INFO - 数据表时间范围: 2026-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 09:33:04,293 - download.async_downloader - INFO - [10.0%] downloading: 435 (1/2)
+2026-01-08 09:33:04,836 - download.async_downloader - INFO - [45.0%] downloading: 534 (2/2)
+2026-01-08 09:33:05,378 - download.async_downloader - INFO - [90.0%] 正在打包ZIP文件...
+2026-01-08 09:33:05,381 - download.async_downloader - INFO - ZIP文件已创建: tmp\device_data_20260108_093305.zip
+2026-01-08 09:33:05,382 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 09:38:09,361 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:38:09,376 - download.async_downloader - INFO - 数据表时间范围: 2026-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 09:38:09,376 - download.async_downloader - INFO - [10.0%] downloading: 2648 (1/1)
+2026-01-08 09:38:09,881 - download.async_downloader - INFO - [90.0%] 正在打包ZIP文件...
+2026-01-08 09:38:09,886 - download.async_downloader - INFO - ZIP文件已创建: tmp\device_data_20260108_093809.zip
+2026-01-08 09:38:09,887 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 09:43:46,965 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:43:46,975 - download.async_downloader - INFO - 数据表时间范围: 2025-12-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 09:43:46,983 - download.async_downloader - INFO - [10.0%] downloading: 161 (1/1)
+2026-01-08 09:43:47,713 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 09:47:55,542 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:48:37,695 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:48:41,428 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 09:48:41,428 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 09:48:41,430 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 09:49:15,493 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:49:40,828 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:49:44,422 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 09:49:44,423 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 09:49:44,423 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 09:50:05,994 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:50:14,469 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:50:14,476 - download.async_downloader - INFO - 数据表时间范围: 2026-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 09:50:14,483 - download.async_downloader - INFO - [10.0%] downloading: 2648 (1/1)
+2026-01-08 09:50:14,560 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 09:50:14,560 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 09:50:14,561 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 09:50:15,045 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 09:50:42,009 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 09:50:42,045 - download.async_downloader - INFO - 数据表时间范围: 2025-12-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 09:50:42,052 - download.async_downloader - INFO - [10.0%] downloading: 2648 (1/1)
+2026-01-08 09:50:42,829 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 10:01:11,682 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 10:01:32,929 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 10:01:38,479 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 10:01:38,480 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 10:01:38,481 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 10:01:52,970 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 10:01:52,974 - download.async_downloader - INFO - 数据表时间范围: 2025-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 10:01:52,984 - download.async_downloader - INFO - [10.0%] downloading: 1586 (1/1)
+2026-01-08 10:01:56,563 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 10:02:53,459 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 10:02:53,466 - download.async_downloader - INFO - 数据表时间范围: 2024-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 10:02:53,473 - download.async_downloader - INFO - [10.0%] downloading: 1586 (1/1)
+2026-01-08 10:03:01,568 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 10:03:54,880 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 10:03:54,890 - download.async_downloader - INFO - 数据表时间范围: 2023-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 10:03:54,901 - download.async_downloader - INFO - [10.0%] downloading: 1586 (1/1)
+2026-01-08 10:04:05,709 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 13:23:56,953 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:24:03,991 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 13:24:03,991 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 13:24:03,993 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 13:28:31,972 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:28:31,992 - download.async_downloader - INFO - 数据表时间范围: 2026-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 13:28:32,000 - download.async_downloader - INFO - [10.0%] downloading: 711 (1/1)
+2026-01-08 13:30:23,796 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:30:29,371 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 13:30:29,372 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 13:30:29,374 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 13:31:17,701 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:31:39,896 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:31:42,414 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 13:31:42,415 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 13:31:42,415 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 13:31:52,121 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:31:52,134 - download.async_downloader - INFO - 数据表时间范围: 2026-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 13:31:52,142 - download.async_downloader - INFO - [10.0%] downloading: 711 (1/1)
+2026-01-08 13:32:25,819 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:32:30,979 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:32:30,987 - download.async_downloader - INFO - 数据表时间范围: 2026-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 13:32:30,992 - download.async_downloader - INFO - [10.0%] downloading: 711 (1/1)
+2026-01-08 13:32:31,094 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 13:32:31,094 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 13:32:31,095 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 13:36:03,209 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:36:21,925 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:36:31,334 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:36:31,348 - download.async_downloader - INFO - 数据表时间范围: 2026-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 13:36:31,350 - download.async_downloader - INFO - [10.0%] downloading: 711 (1/1)
+2026-01-08 13:36:31,455 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 13:36:31,455 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 13:36:31,457 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 13:37:43,609 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:37:54,432 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:37:54,434 - download.async_downloader - INFO - 数据表时间范围: 2026-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 13:37:54,444 - download.async_downloader - INFO - [10.0%] downloading: 711 (1/1)
+2026-01-08 13:37:54,535 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 13:37:54,535 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 13:37:54,535 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 13:37:55,375 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 13:38:02,356 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:38:02,360 - download.async_downloader - INFO - 数据表时间范围: 2026-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 13:38:02,367 - download.async_downloader - INFO - [10.0%] downloading: 711 (1/1)
+2026-01-08 13:39:18,453 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:39:29,068 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:39:29,079 - download.async_downloader - INFO - 数据表时间范围: 2026-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 13:39:29,091 - download.async_downloader - INFO - [10.0%] downloading: 2526 (1/1)
+2026-01-08 13:39:29,185 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 13:39:29,192 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 13:39:29,193 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 13:39:29,645 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 13:39:51,768 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:39:51,771 - download.async_downloader - INFO - 数据表时间范围: 2025-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 13:39:51,781 - download.async_downloader - INFO - [10.0%] downloading: 2526 (1/1)
+2026-01-08 13:40:00,968 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 13:40:42,930 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:40:42,942 - download.async_downloader - INFO - 数据表时间范围: 2025-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 13:40:42,957 - download.async_downloader - INFO - [10.0%] downloading: 1368 (1/1)
+2026-01-08 13:50:01,427 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:50:05,006 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 13:50:05,007 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 13:50:05,008 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 13:50:29,525 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:50:29,547 - download.async_downloader - INFO - 数据表时间范围: 2026-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 13:50:29,552 - download.async_downloader - INFO - [10.0%] downloading: 2526 (1/2)
+2026-01-08 13:50:30,028 - download.async_downloader - INFO - [45.0%] downloading: 1368 (2/2)
+2026-01-08 13:50:30,524 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 13:52:37,235 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:52:37,258 - download.async_downloader - INFO - 数据表时间范围: 2025-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 13:52:37,275 - download.async_downloader - INFO - [10.0%] downloading: 2526 (1/2)
+2026-01-08 13:52:44,868 - download.async_downloader - INFO - [45.0%] downloading: 1368 (2/2)
+2026-01-08 13:53:34,590 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:53:39,019 - mysql.connector - INFO - package: mysql.connector.plugins
+2026-01-08 13:53:39,020 - mysql.connector - INFO - plugin_name: mysql_native_password
+2026-01-08 13:53:39,020 - mysql.connector - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2026-01-08 13:54:01,568 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:54:01,604 - download.async_downloader - INFO - 数据表时间范围: 2025-01-01 00:00:00 到 2025-01-31 23:59:59
+2026-01-08 13:54:01,611 - download.async_downloader - INFO - [10.0%] downloading: 1368 (1/1)
+2026-01-08 13:54:50,203 - urllib3.connectionpool - WARNING - Connection pool is full, discarding connection: iot-datas.oss-cn-beijing.aliyuncs.com. Connection pool size: 10
+2026-01-08 13:54:52,021 - urllib3.connectionpool - WARNING - Connection pool is full, discarding connection: iot-datas.oss-cn-beijing.aliyuncs.com. Connection pool size: 10
+2026-01-08 13:54:52,147 - urllib3.connectionpool - WARNING - Connection pool is full, discarding connection: iot-datas.oss-cn-beijing.aliyuncs.com. Connection pool size: 10
+2026-01-08 13:54:56,136 - urllib3.connectionpool - WARNING - Connection pool is full, discarding connection: iot-datas.oss-cn-beijing.aliyuncs.com. Connection pool size: 10
+2026-01-08 13:54:56,334 - urllib3.connectionpool - WARNING - Connection pool is full, discarding connection: iot-datas.oss-cn-beijing.aliyuncs.com. Connection pool size: 10
+2026-01-08 13:54:59,924 - urllib3.connectionpool - WARNING - Connection pool is full, discarding connection: iot-datas.oss-cn-beijing.aliyuncs.com. Connection pool size: 10
+2026-01-08 13:55:01,273 - urllib3.connectionpool - WARNING - Connection pool is full, discarding connection: iot-datas.oss-cn-beijing.aliyuncs.com. Connection pool size: 10
+2026-01-08 13:55:04,885 - urllib3.connectionpool - WARNING - Connection pool is full, discarding connection: iot-datas.oss-cn-beijing.aliyuncs.com. Connection pool size: 10
+2026-01-08 13:55:06,064 - urllib3.connectionpool - WARNING - Connection pool is full, discarding connection: iot-datas.oss-cn-beijing.aliyuncs.com. Connection pool size: 10
+2026-01-08 13:55:17,926 - urllib3.connectionpool - WARNING - Connection pool is full, discarding connection: iot-datas.oss-cn-beijing.aliyuncs.com. Connection pool size: 10
+2026-01-08 13:55:17,936 - download.async_downloader - INFO - [100.0%] Download completed
+2026-01-08 13:57:01,463 - download.async_downloader - INFO - OSS连接成功
+2026-01-08 13:57:01,488 - download.async_downloader - INFO - 数据表时间范围: 2026-01-01 00:00:00 到 2026-01-31 23:59:59
+2026-01-08 13:57:01,505 - download.async_downloader - INFO - [10.0%] downloading: 3058 (1/1)
+2026-01-08 14:33:24,824 - download.async_downloader - INFO - OSS连接成功
